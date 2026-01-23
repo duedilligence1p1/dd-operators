@@ -10,6 +10,7 @@ import authRoutes from './routes/auth.js';
 import respostasRoutes from './routes/respostas.js';
 import uploadRoutes from './routes/upload.js';
 import adminRoutes from './routes/admin.js';
+import emergencyRoutes from './routes/emergency.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,6 +41,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/respostas', respostasRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/emergency', emergencyRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
