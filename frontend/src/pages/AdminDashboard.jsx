@@ -76,8 +76,14 @@ export default function AdminDashboard() {
         Object.entries(secoes).forEach(([secaoNome, dados]) => {
             if (dados && typeof dados === 'object') {
                 Object.entries(dados).forEach(([pergunta, resposta]) => {
+                    // Ignorar chaves de tempo na iteração principal
+                    if (pergunta.endsWith('_tempo')) return;
+
                     const perguntaFormatada = pergunta.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                    rows.push([secaoNome, perguntaFormatada, resposta || '']);
+                    const tempoKey = `${pergunta}_tempo`;
+                    const tempoStr = dados[tempoKey] ? ` | Tempo: ${dados[tempoKey]}` : '';
+
+                    rows.push([secaoNome, perguntaFormatada, (resposta || '') + tempoStr]);
                 });
             }
         });
@@ -215,16 +221,29 @@ export default function AdminDashboard() {
                                                             {secaoNome}
                                                         </h5>
                                                         <div style={{ display: 'grid', gap: '0.5rem' }}>
-                                                            {Object.entries(dados).map(([pergunta, resposta]) => (
-                                                                <div key={pergunta} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '0.5rem', background: 'rgba(30, 41, 59, 0.5)', borderRadius: '0.5rem' }}>
-                                                                    <span style={{ color: 'var(--neutral-400)', fontSize: '0.875rem' }}>
-                                                                        {pergunta.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                                                                    </span>
-                                                                    <span style={{ color: 'var(--neutral-100)', fontWeight: 500 }}>
-                                                                        {resposta || <span style={{ color: 'var(--neutral-500)' }}>—</span>}
-                                                                    </span>
-                                                                </div>
-                                                            ))}
+                                                            {Object.entries(dados).map(([pergunta, resposta]) => {
+                                                                // Ignorar chaves de tempo na iteração principal
+                                                                if (pergunta.endsWith('_tempo')) return null;
+
+                                                                const tempoKey = `${pergunta}_tempo`;
+                                                                const tempoValue = dados[tempoKey];
+
+                                                                return (
+                                                                    <div key={pergunta} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', padding: '0.5rem', background: 'rgba(30, 41, 59, 0.5)', borderRadius: '0.5rem' }}>
+                                                                        <span style={{ color: 'var(--neutral-400)', fontSize: '0.875rem' }}>
+                                                                            {pergunta.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                                                                        </span>
+                                                                        <span style={{ color: 'var(--neutral-100)', fontWeight: 500 }}>
+                                                                            {resposta || <span style={{ color: 'var(--neutral-500)' }}>—</span>}
+                                                                            {tempoValue && (
+                                                                                <span style={{ marginLeft: '1rem', color: 'var(--primary-400)', fontSize: '0.875rem', borderLeft: '1px solid var(--neutral-700)', paddingLeft: '1rem' }}>
+                                                                                    ⏰ {tempoValue}
+                                                                                </span>
+                                                                            )}
+                                                                        </span>
+                                                                    </div>
+                                                                );
+                                                            })}
                                                         </div>
                                                     </div>
                                                 )
