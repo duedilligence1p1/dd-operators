@@ -213,24 +213,47 @@ router.get('/download/:operadorId/:filename', async (req, res) => {
     }
 });
 
+// DELETE /api/admin/operadores/:id - Excluir operador
+router.delete('/operadores/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const result = await query(
+            'DELETE FROM operadores WHERE id = $1 RETURNING id',
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Operador não encontrado' });
+        }
+
+        console.log('🗑️ [ADMIN] Operador excluído:', id);
+        res.json({ success: true, message: 'Operador excluído com sucesso' });
+    } catch (error) {
+        console.error('Erro ao excluir operador:', error);
+        res.status(500).json({ error: 'Erro ao excluir operador' });
+    }
+});
+
 // GET /api/admin/estatisticas - Estatísticas gerais
 router.get('/estatisticas', async (req, res) => {
     try {
-        // Query compatível com SQLite (sem FILTER)
+        // Query compatível com PostgreSQL
         const statsResult = await query(`
             SELECT 
-                COUNT(CASE WHEN o.is_admin = 0 THEN 1 END) as total_operadores,
+                COUNT(CASE WHEN o.is_admin = false THEN 1 END) as total_operadores,
                 COUNT(CASE WHEN r.status_submissao = 'finalizado' THEN 1 END) as finalizados,
                 COUNT(CASE WHEN r.status_submissao = 'rascunho' OR r.status_submissao IS NULL THEN 1 END) as em_andamento,
-                COUNT(CASE WHEN o.status = 'ativo' AND o.is_admin = 0 THEN 1 END) as ativos,
+                COUNT(CASE WHEN o.status = 'ativo' AND o.is_admin = false THEN 1 END) as ativos,
                 COUNT(CASE WHEN o.status = 'inativo' THEN 1 END) as inativos
             FROM operadores o
             LEFT JOIN respostas_due_diligence r ON o.id = r.operador_id
+            WHERE o.is_admin = false
         `);
 
         res.json({
             ...statsResult.rows[0],
-            alertas_criticos: 0 // Simplificado por enquanto, pois depende de parsing JSON
+            alertas_criticos: 0 // Simplificado
         });
     } catch (error) {
         console.error('Erro ao buscar estatísticas:', error);
