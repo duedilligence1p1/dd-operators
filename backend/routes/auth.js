@@ -22,7 +22,14 @@ router.post('/login', async (req, res) => {
         console.log('📊 [LOGIN] Usuários encontrados:', result.rows.length);
 
         if (result.rows.length === 0) {
-            console.log('❌ [LOGIN] Nenhum usuário encontrado com este email');
+            console.log('❌ [LOGIN] Usuário não encontrado:', emailLower);
+            // Listar contagem total para ver se o banco está vazio ou se é o banco errado
+            try {
+                const countResult = await query('SELECT COUNT(*) as total FROM operadores');
+                console.log('📊 [LOGIN] Total de usuários no banco:', countResult.rows[0].total);
+            } catch (e) {
+                console.error('💥 [LOGIN] Erro ao contar usuários:', e.message);
+            }
             return res.status(401).json({ error: 'Credenciais inválidas' });
         }
 

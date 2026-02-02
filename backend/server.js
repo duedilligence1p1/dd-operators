@@ -25,13 +25,7 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.some(allowed => origin.startsWith(allowed.replace(/\/$/, '')))) {
-            callback(null, true);
-        } else {
-            callback(null, true); // Permitir todas origens em produção (ajustar conforme necessário)
-        }
-    },
+    origin: allowedOrigins, // Simplificado para usar a lista de origens permitidas diretamente
     credentials: true
 }));
 app.use(express.json());
@@ -43,7 +37,15 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/emergency', emergencyRoutes);
 
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/api/health', (req, res) => {
+    const isPostgres = !!process.env.DATABASE_URL && process.env.DB_TYPE !== 'sqlite';
+    res.json({
+        status: 'ok',
+        database: isPostgres ? 'postgresql' : 'sqlite',
+        frontend_url: process.env.FRONTEND_URL || 'not set',
+        env: process.env.NODE_ENV || 'development'
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`🚀 Due Diligence API rodando em http://localhost:${PORT}`);
