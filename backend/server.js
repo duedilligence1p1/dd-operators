@@ -38,10 +38,14 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/emergency', emergencyRoutes);
 
 app.get('/api/health', (req, res) => {
+    const dbUrl = process.env.DATABASE_URL || '';
+    const dbUrlCheck = dbUrl ? `${dbUrl.substring(0, 15)}...${dbUrl.substring(dbUrl.length - 15)}` : 'not set';
     const isPostgres = !!process.env.DATABASE_URL && process.env.DB_TYPE !== 'sqlite';
+
     res.json({
         status: 'ok',
         database: isPostgres ? 'postgresql' : 'sqlite',
+        db_url_check: dbUrlCheck,
         frontend_url: process.env.FRONTEND_URL || 'not set',
         env: process.env.NODE_ENV || 'development'
     });
