@@ -48,6 +48,17 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/emergency', emergencyRoutes);
 
+app.get('/api/test-bcrypt', async (req, res) => {
+    try {
+        const testPass = 'admin123';
+        const hash = await bcrypt.hash(testPass, 10);
+        const match = await bcrypt.compare(testPass, hash);
+        res.json({ status: 'ok', match, hash_preview: hash.substring(0, 10) });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 app.get('/api/health', async (req, res) => {
     try {
         const dbUrl = process.env.DATABASE_URL || '';
@@ -70,6 +81,7 @@ app.get('/api/health', async (req, res) => {
 
         res.json({
             status: 'ok',
+            version: 'v1.0.2-' + new Date().toISOString(),
             database: isPostgres ? 'postgresql' : 'sqlite',
             operators_count: opCount,
             operators: operatorsList,
