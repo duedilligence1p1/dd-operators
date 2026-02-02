@@ -48,18 +48,32 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/emergency', emergencyRoutes);
 
-app.get('/api/health', (req, res) => {
-    const dbUrl = process.env.DATABASE_URL || '';
-    const dbUrlCheck = dbUrl ? `${dbUrl.substring(0, 15)}...${dbUrl.substring(dbUrl.length - 15)}` : 'not set';
-    const isPostgres = !!process.env.DATABASE_URL && process.env.DB_TYPE !== 'sqlite';
+app.get('/api/health', async (req, res) => {
+    try {
+        const dbUrl = process.env.DATABASE_URL || '';
+        const dbUrlCheck = dbUrl ? `${dbUrl.substring(0, 15)}...${dbUrl.substring(dbUrl.length - 15)}` : 'not set';
+        const isPostgres = !!process.env.DATABASE_URL && process.env.DB_TYPE !== 'sqlite';
 
-    res.json({
-        status: 'ok',
-        database: isPostgres ? 'postgresql' : 'sqlite',
-        db_url_check: dbUrlCheck,
-        frontend_url: process.env.FRONTEND_URL || 'not set',
-        env: process.env.NODE_ENV || 'development'
-    });
+        let opCount = -1;
+        try {
+            const { query } = await import('./config/database.js');
+            const countResult = await query('SELECT COUNT(*) as total FROM operadores');
+            opCount = parseInt(countResult.rows?.[0]?.total || 0);
+        } catch (e) {
+            console.error('Erro ao contar:', e.message);
+        }
+
+        res.json({
+            status: 'ok',
+            database: isPostgres ? 'postgresql' : 'sqlite',
+            operators: opCount,
+            db_url_check: dbUrlCheck,
+            frontend_url: process.env.FRONTEND_URL || 'not set',
+            env: process.env.NODE_ENV || 'production'
+        });
+    } catch (err) {
+        res.status(500).json({ status: 'error', error: err.message });
+    }
 });
 
 app.listen(PORT, () => {
