@@ -47,6 +47,9 @@ router.post('/login', async (req, res) => {
         }
 
         console.log('🔑 [LOGIN] Verificando senha...');
+        console.log('📦 [LOGIN] DB Hash (primeiros 10):', user.password_hash ? user.password_hash.substring(0, 10) : 'null');
+        console.log('📦 [LOGIN] DB Hash (últimos 10):', user.password_hash ? user.password_hash.substring(user.password_hash.length - 10) : 'null');
+
         const validPassword = await bcrypt.compare(password, user.password_hash);
         console.log('✅ [LOGIN] Senha válida:', validPassword);
 
