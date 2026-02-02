@@ -94,8 +94,15 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/me', authenticateToken, (req, res) => {
-    res.json({ user: { id: req.user.id, email: req.user.email, nome_empresa: req.user.nome_empresa, is_admin: req.user.is_admin } });
+router.get('/test-bcrypt', async (req, res) => {
+    try {
+        const testPass = 'test12345';
+        const hash = await bcrypt.hash(testPass, 10);
+        const match = await bcrypt.compare(testPass, hash);
+        res.json({ pass: testPass, hash: hash, match: match, bcrypt_type: typeof bcrypt.compare });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
 });
 
 export default router;
