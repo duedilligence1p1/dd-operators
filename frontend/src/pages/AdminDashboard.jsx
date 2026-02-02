@@ -37,6 +37,17 @@ export default function AdminDashboard() {
         loadData();
     };
 
+    const handleDeleteOperador = async (id, nome) => {
+        if (!window.confirm(`Tem certeza que deseja excluir o operador "${nome}"? Esta ação não pode ser desfeita.`)) return;
+        try {
+            await adminAPI.deleteOperador(id);
+            loadData();
+        } catch (error) {
+            console.error(error);
+            alert('Erro ao excluir operador');
+        }
+    };
+
     const handleCreateOperador = async (e) => {
         e.preventDefault();
         setCreating(true);
@@ -158,11 +169,10 @@ export default function AdminDashboard() {
                     </div>
                 </div>
 
-                <div className="stats-grid">
+                <div className="stats-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
                     <div className="stat-card"><div className="stat-icon" style={{ background: 'linear-gradient(135deg, #3b82f6, #60a5fa)' }}>👥</div><div><div className="stat-value">{stats?.total_operadores || 0}</div><div className="stat-label">{t('admin.operators')}</div></div></div>
                     <div className="stat-card"><div className="stat-icon" style={{ background: 'linear-gradient(135deg, #10b981, #34d399)' }}>✓</div><div><div className="stat-value">{stats?.finalizados || 0}</div><div className="stat-label">{t('admin.finalized')}</div></div></div>
                     <div className="stat-card"><div className="stat-icon" style={{ background: 'linear-gradient(135deg, #f59e0b, #fbbf24)' }}>⏳</div><div><div className="stat-value">{stats?.em_andamento || 0}</div><div className="stat-label">{t('admin.inProgress')}</div></div></div>
-                    <div className="stat-card"><div className="stat-icon" style={{ background: 'linear-gradient(135deg, #ef4444, #f87171)' }}>⚠️</div><div><div className="stat-value">{stats?.alertas_criticos || 0}</div><div className="stat-label">{t('admin.alerts')}</div></div></div>
                 </div>
 
                 <div className="card">
@@ -177,7 +187,17 @@ export default function AdminDashboard() {
                                         <td style={{ color: 'var(--neutral-400)' }}>{op.email}</td>
                                         <td><span className={`badge ${op.status === 'ativo' ? 'badge-success' : 'badge-danger'}`}>{op.status}</span></td>
                                         <td><div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><div className="progress-bar"><div className="progress-fill" style={{ width: `${(op.secoes_preenchidas / 8) * 100}%` }} /></div><span>{op.progresso}</span>{op.status_submissao === 'finalizado' && <span className="badge badge-success">✓</span>}</div></td>
-                                        <td><div style={{ display: 'flex', gap: '0.5rem' }}><button className="btn btn-sm btn-outline" onClick={() => viewDetalhes(op.id)}>👁️ Ver</button><button className="btn btn-sm btn-ghost" onClick={() => toggleStatus(op.id, op.status)}>{op.status === 'ativo' ? '🔒' : '🔓'}</button></div></td>
+                                        <td>
+                                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                                <button className="btn btn-sm btn-outline" onClick={() => viewDetalhes(op.id)}>👁️ Ver</button>
+                                                <button className="btn btn-sm btn-ghost" onClick={() => toggleStatus(op.id, op.status)} title={op.status === 'ativo' ? 'Desativar' : 'Ativar'}>
+                                                    {op.status === 'ativo' ? '🔒' : '🔓'}
+                                                </button>
+                                                <button className="btn btn-sm btn-ghost" onClick={() => handleDeleteOperador(op.id, op.nome_empresa)} style={{ color: 'var(--danger-500)' }} title="Excluir Operador">
+                                                    🗑️
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))}
                                 {operadores.length === 0 && <tr><td colSpan="5" style={{ textAlign: 'center', padding: '3rem', color: 'var(--neutral-500)' }}>Nenhum operador</td></tr>}

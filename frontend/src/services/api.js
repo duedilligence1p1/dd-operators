@@ -63,5 +63,6 @@ export const adminAPI = {
         return data;
     },
     async updateStatus(id, status) { const res = await fetchWithAuth(`/admin/operadores/${id}/status`, { method: 'PUT', body: JSON.stringify({ status }) }); return res.json(); },
-    async getEstatisticas() { const res = await fetchWithAuth('/admin/estatisticas'); return res.json(); }
+    async getEstatisticas() { const res = await fetchWithAuth('/admin/estatisticas'); return res.json(); },
+    async deleteOperador(id) { const res = await fetchWithAuth(`/admin/operadores/${id}`, { method: 'DELETE' }); return res.json(); }
 };
