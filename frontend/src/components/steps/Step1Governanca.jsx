@@ -1,4 +1,5 @@
 import { useLanguage } from '../../context/LanguageContext';
+import TimeToImplement from './TimeToImplement';
 
 export default function Step1Governanca({ data, updateData, disabled }) {
     const { t } = useLanguage();
@@ -8,28 +9,47 @@ export default function Step1Governanca({ data, updateData, disabled }) {
     return (
         <div>
             <div className="step-section">
-                <h3 className="step-section-title">{t('step1.title')}</h3>
+                <h3 className="step-section-title">{t('step1.title')} (V2)</h3>
                 <div className="form-row">
-                    <div className="form-group"><label className="form-label required">{t('step1.country')}</label><input type="text" name="pais_sede" className="form-input" placeholder="Ex: Brasil / USA" value={formData.pais_sede || ''} onChange={handleChange} disabled={disabled} /></div>
-                    <div className="form-group"><label className="form-label required">{t('step1.licenses')}</label><input type="text" name="jurisdicoes_operacao" className="form-input" placeholder={t('step1.licensesPlaceholder')} value={formData.jurisdicoes_operacao || ''} onChange={handleChange} disabled={disabled} /></div>
+                    <div className="form-group">
+                        <label className="form-label required">{t('step1.country')}</label>
+                        <input type="text" name="pais_sede" className="form-input" placeholder="Ex: Brasil / USA" value={formData.pais_sede || ''} onChange={handleChange} disabled={disabled} />
+                    </div>
+                    <div className="form-group">
+                        <label className="form-label required">{t('step1.licenses')}</label>
+                        <input type="text" name="jurisdicoes_operacao" className="form-input" placeholder={t('step1.licensesPlaceholder')} value={formData.jurisdicoes_operacao || ''} onChange={handleChange} disabled={disabled} />
+                    </div>
                 </div>
-                <div className="form-group"><label className="form-label">{t('step1.licenses')}</label><textarea name="licencas_regulatorias" className="form-textarea" placeholder={t('step1.licensesPlaceholder')} value={formData.licencas_regulatorias || ''} onChange={handleChange} disabled={disabled} /></div>
+                <div className="form-group">
+                    <label className="form-label">{t('step1.licenses')}</label>
+                    <textarea name="licencas_regulatorias" className="form-textarea" placeholder={t('step1.licensesPlaceholder')} value={formData.licencas_regulatorias || ''} onChange={handleChange} disabled={disabled} />
+                </div>
             </div>
+
             <div className="step-section">
-                <h3 className="step-section-title">Data Protection Officer (DPO)</h3>
+                <h3 className="step-section-title">{t('steps.kyc')}</h3>
                 <div className="form-group">
                     <label className="form-label required">{t('step1.hasDpo')}</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="possui_dpo" value="sim" checked={formData.possui_dpo === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step1.yes')}</span>
+                            <span className="form-check-label">{t('common.yes')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="possui_dpo" value="parcial" checked={formData.possui_dpo === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('step3.partial')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="possui_dpo" value="em_implementacao" checked={formData.possui_dpo === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('step3.inProgress')}</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="possui_dpo" value="nao" checked={formData.possui_dpo === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step1.no')}</span>
+                            <span className="form-check-label">{t('common.no')}</span>
                         </label>
                     </div>
                 </div>
+
                 {formData.possui_dpo === 'sim' && (
                     <div className="form-row" style={{ marginTop: '1rem', animation: 'fadeIn 0.3s ease-in-out' }}>
                         <div className="form-group">
@@ -42,18 +62,81 @@ export default function Step1Governanca({ data, updateData, disabled }) {
                         </div>
                     </div>
                 )}
+
+                <TimeToImplement
+                    section="governanca"
+                    field="possui_dpo"
+                    value={formData.possui_dpo_tempo}
+                    onChange={updateData}
+                    disabled={disabled}
+                    visible={formData.possui_dpo && formData.possui_dpo !== 'sim'}
+                />
             </div>
+
             <div className="step-section">
                 <h3 className="step-section-title">{t('step1.policies')}</h3>
-                <div className="form-group"><label className="form-label">{t('step1.policies')}</label><div className="radio-group-horizontal">
-                    <label className="form-check"><input type="radio" name="politica_privacidade" value="sim" checked={formData.politica_privacidade === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" /><span className="form-check-label">{t('common.yes')}</span></label>
-                    <label className="form-check"><input type="radio" name="politica_privacidade" value="nao" checked={formData.politica_privacidade === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" /><span className="form-check-label">{t('common.no')}</span></label>
-                </div></div>
-                <div className="form-group"><label className="form-label">{t('step1.policyAcceptance')}</label><div className="radio-group-horizontal">
-                    <label className="form-check"><input type="radio" name="politica_seguranca" value="sim" checked={formData.politica_seguranca === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" /><span className="form-check-label">{t('common.yes')}</span></label>
-                    <label className="form-check"><input type="radio" name="politica_seguranca" value="nao" checked={formData.politica_seguranca === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" /><span className="form-check-label">{t('common.no')}</span></label>
-                </div></div>
+                <div className="form-group">
+                    <label className="form-label required">{t('step1.policies')}</label>
+                    <div className="radio-group-horizontal">
+                        <label className="form-check">
+                            <input type="radio" name="politica_privacidade" value="sim" checked={formData.politica_privacidade === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('common.yes')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="politica_privacidade" value="parcial" checked={formData.politica_privacidade === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('step3.partial')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="politica_privacidade" value="em_implementacao" checked={formData.politica_privacidade === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="politica_privacidade" value="nao" checked={formData.politica_privacidade === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('common.no')}</span>
+                        </label>
+                    </div>
+                    <TimeToImplement
+                        section="governanca"
+                        field="politica_privacidade"
+                        value={formData.politica_privacidade_tempo}
+                        onChange={updateData}
+                        disabled={disabled}
+                        visible={formData.politica_privacidade && formData.politica_privacidade !== 'sim'}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label className="form-label required">{t('step1.policyAcceptance')}</label>
+                    <div className="radio-group-horizontal">
+                        <label className="form-check">
+                            <input type="radio" name="politica_seguranca" value="sim" checked={formData.politica_seguranca === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('common.yes')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="politica_seguranca" value="parcial" checked={formData.politica_seguranca === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('step3.partial')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="politica_seguranca" value="em_implementacao" checked={formData.politica_seguranca === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="politica_seguranca" value="nao" checked={formData.politica_seguranca === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('common.no')}</span>
+                        </label>
+                    </div>
+                    <TimeToImplement
+                        section="governanca"
+                        field="politica_seguranca"
+                        value={formData.politica_seguranca_tempo}
+                        onChange={updateData}
+                        disabled={disabled}
+                        visible={formData.politica_seguranca && formData.politica_seguranca !== 'sim'}
+                    />
+                </div>
             </div>
+
         </div>
     );
 }
+

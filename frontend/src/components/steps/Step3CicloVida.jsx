@@ -1,4 +1,5 @@
 import { useLanguage } from '../../context/LanguageContext';
+import TimeToImplement from './TimeToImplement';
 
 export default function Step3CicloVida({ data, updateData, disabled }) {
     const { t } = useLanguage();
@@ -9,18 +10,20 @@ export default function Step3CicloVida({ data, updateData, disabled }) {
         <div>
             <div className="step-section">
                 <h3 className="step-section-title">{t('step3.title')}</h3>
-                <div className="form-group"><label className="form-label required">{t('step3.retention')}</label>
+                <div className="form-group">
+                    <label className="form-label required">{t('step3.retention')}</label>
                     <select name="retencao_periodo" className="form-select" value={formData.retencao_periodo || ''} onChange={handleChange} disabled={disabled}>
                         <option value="">{t('step3.selectRetention')}</option>
-                        <option value="6_meses">6 months</option>
+                        <option value="6_meses">{t('step3.sixMonths')}</option>
                         <option value="1_ano">{t('step3.oneYear')}</option>
-                        <option value="2_anos">2 years</option>
+                        <option value="2_anos">{t('step3.twoYears')}</option>
                         <option value="5_anos">{t('step3.fiveYears')}</option>
                         <option value="10_anos">{t('step3.tenYears')}</option>
                         <option value="variavel">{t('step3.variable')}</option>
                     </select>
                 </div>
             </div>
+
             <div className="step-section">
                 <h3 className="step-section-title">{t('step3.disposal')}</h3>
                 <div className="form-group">
@@ -31,11 +34,29 @@ export default function Step3CicloVida({ data, updateData, disabled }) {
                             <span className="form-check-label">{t('common.yes')}</span>
                         </label>
                         <label className="form-check">
+                            <input type="radio" name="descarte_documentado" value="parcial" checked={formData.descarte_documentado === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('step3.partial')}</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="descarte_documentado" value="em_implementacao" checked={formData.descarte_documentado === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                        </label>
+                        <label className="form-check">
                             <input type="radio" name="descarte_documentado" value="nao" checked={formData.descarte_documentado === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
                             <span className="form-check-label">{t('common.no')}</span>
                         </label>
                     </div>
                 </div>
+
+                <TimeToImplement
+                    section="ciclo_vida"
+                    field="descarte_documentado"
+                    value={formData.descarte_documentado_tempo}
+                    onChange={updateData}
+                    disabled={disabled}
+                    visible={formData.descarte_documentado && formData.descarte_documentado !== 'sim'}
+                />
+
                 {formData.descarte_documentado === 'sim' && (
                     <div className="form-group" style={{ marginTop: '1rem', animation: 'fadeIn 0.3s ease-in-out' }}>
                         <label className="form-label">{t('step3.disposalMethod')}</label>
@@ -43,11 +64,12 @@ export default function Step3CicloVida({ data, updateData, disabled }) {
                             <option value="">{t('step3.selectMethod')}</option>
                             <option value="wipe_seguro">{t('step3.secureErasure')}</option>
                             <option value="destruicao_fisica">{t('step3.physicalDestruction')}</option>
-                            <option value="anonimizacao">Anonymization</option>
+                            <option value="anonimizacao">{t('step3.anonymization')}</option>
                         </select>
                     </div>
                 )}
             </div>
+
             <div className="step-section">
                 <h3 className="step-section-title">{t('step3.compliance')}</h3>
                 <div className="form-group">
@@ -63,11 +85,20 @@ export default function Step3CicloVida({ data, updateData, disabled }) {
                         </label>
                         <label className="form-check">
                             <input type="radio" name="lgpd_conformidade" value="em_implementacao" checked={formData.lgpd_conformidade === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">In Progress</span>
+                            <span className="form-check-label">{t('step3.inProgress')}</span>
                         </label>
                     </div>
                 </div>
+                <TimeToImplement
+                    section="ciclo_vida"
+                    field="lgpd_conformidade"
+                    value={formData.lgpd_conformidade_tempo}
+                    onChange={updateData}
+                    disabled={disabled}
+                    visible={formData.lgpd_conformidade === 'parcial' || formData.lgpd_conformidade === 'em_implementacao'}
+                />
             </div>
         </div>
     );
 }
+

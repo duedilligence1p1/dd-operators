@@ -65,7 +65,9 @@ export const translations = {
             successFinalized: 'Questionário finalizado!',
             errorSave: 'Erro ao salvar',
             errorLoad: 'Erro ao carregar',
-            errorFinalize: 'Erro ao finalizar'
+            errorFinalize: 'Erro ao finalizar',
+            timeToImplement: 'Tempo previsto para implementação',
+            timeToImplementPlaceholder: 'Ex: 3 meses, Dezembro/2024...'
         },
         // Steps titles
         steps: {
@@ -73,6 +75,7 @@ export const translations = {
             security: 'Segurança',
             lifecycle: 'Ciclo de Vida',
             incidents: 'Incidentes',
+            kyc: 'KYC & Regulatório',
             development: 'SDLC & IA',
             hr: 'RH & Auditoria',
             integrity: 'Integridade',
@@ -109,6 +112,7 @@ export const translations = {
             quarterly: 'Trimestral',
             semiannual: 'Semestral',
             annual: 'Anual',
+            lastPentest: 'Último pentest realizado',
             accessControl: 'Controle de acesso baseado em funções (RBAC)'
         },
         // Step 3 - Lifecycle
@@ -129,25 +133,37 @@ export const translations = {
             secureErasure: 'Apagamento seguro',
             degaussing: 'Degaussing',
             encryption: 'Criptografia',
-            compliance: 'Conformidade com regulamentação local de privacidade de dados pessoais',
+            anonymization: 'Anonimização',
+            compliance: 'Conformidade com regulamentação de privacidade (LGPD/GDPR)',
             yes: 'Sim',
             no: 'Não',
-            partial: 'Parcial'
+            partial: 'Parcial',
+            inProgress: 'Em Progresso'
         },
         // Step 4 - Incidents
         step4: {
             title: 'Resposta a Incidentes',
             plan: 'Plano de resposta a incidentes documentado?',
             notificationTime: 'Tempo de notificação ao titular (horas)',
-            rto: 'RTO - Recovery Time Objective (horas)',
-            rpo: 'RPO - Recovery Point Objective (horas)',
-            csirt: 'Possui equipe de resposta a incidentes?',
-            insurance: 'Possui seguro cyber?',
+            rto: 'RTO - Tempo Objetivo de Recuperação (horas)',
+            rpo: 'RPO - Ponto Objetivo de Recuperação (horas)',
+            csirt: 'Possui equipe de resposta a incidentes (CSIRT)?',
+            insurance: 'Possui seguro contra riscos cibernéticos?',
             yes: 'Sim',
             no: 'Não'
         },
-        // Step 5 - Development
+        // Step 5 - KYC & Regulatory (New)
         step5: {
+            title: 'KYC e Reportes Regulatórios',
+            kyc: 'Realiza Verificação de Identidade (KYC)?',
+            kycProvider: 'Fornecedor de biometria',
+            kycVerification: 'Como é garantida a veracidade da biometria?',
+            pld: 'Possui programa de PLD/AML (Anti-Lavagem de Dinheiro)?',
+            logs: 'Mantém logs para órgãos reguladores?',
+            reportAgencies: 'Órgãos para os quais reporta'
+        },
+        // Step 6 - Development
+        step6: {
             title: 'Desenvolvimento Seguro & IA',
             sdlc: 'Possui SDLC (Secure Development Lifecycle)?',
             codeReview: 'Realiza revisão de código?',
@@ -155,13 +171,21 @@ export const translations = {
             ai: 'Utiliza sistemas de IA?',
             aiGovernance: 'Possui governança de IA documentada?',
             aiDataProtection: 'IA processa dados pessoais?',
+            aiConsent: 'Consentimento do usuário para processamento por IA?',
             yes: 'Sim',
             no: 'Não'
         },
-        // Step 6 - HR
-        step6: {
-            title: 'RH & Treinamento',
+        // Step 7 - HR
+        step7: {
+            title: 'RH & Auditoria',
             backgroundCheck: 'Realiza background check de funcionários?',
+            verificationTypes: 'Tipos de verificação (Criminal, Histórico...)',
+            hasSoc: 'Possui Security Operations Center (SOC)?',
+            operates247: 'Opera em regime 24x7?',
+            socModel: 'Modelo do SOC',
+            internal: 'Interno',
+            outsourced: 'Terceirizado (MSSP)',
+            hybrid: 'Híbrido',
             securityTraining: 'Programa de treinamento em segurança?',
             trainingFrequency: 'Frequência do treinamento',
             selectFrequency: 'Selecione a frequência',
@@ -175,19 +199,22 @@ export const translations = {
             yes: 'Sim',
             no: 'Não'
         },
-        // Step 7 - Integrity
-        step7: {
+        // Step 8 - Integrity
+        step8: {
             title: 'Integridade & Ética',
-            codeOfConduct: 'Possui código de conduta?',
-            whistleblower: 'Canal de denúncias implementado?',
-            antiCorruption: 'Política anticorrupção documentada?',
-            thirdParty: 'Due diligence de terceiros?',
-            conflictOfInterest: 'Política de conflito de interesses?',
+            rng: 'Possui certificação RNG?',
+            certifier: 'Entidade certificadora',
+            date: 'Data da certificação',
+            otherCerts: 'Outras certificações de segurança',
+            portability: 'Permite exportação/portabilidade de dados?',
+            notes: 'Observações adicionais',
+            notesPlaceholder: 'Informações complementares...',
             yes: 'Sim',
             no: 'Não'
         },
-        // Step 8 - Upload
-        step8: {
+
+        // Step 9 - Upload
+        step9: {
             title: 'Documentos & Evidências',
             subtitle: 'Faça upload dos documentos comprobatórios',
             category: 'Categoria do documento',
@@ -275,6 +302,256 @@ export const translations = {
         },
         // Questionnaire
         questionnaire: {
+            title: 'Questionário Due Diligence',
+            subtitle: 'Preencha as informações de compliance da sua empresa',
+            step: 'Etapa',
+            of: 'de',
+            previous: 'Anterior',
+            next: 'Próximo',
+            saving: 'Salvando...',
+            finalize: 'Finalizar',
+            reopen: 'Reabrir',
+            sent: 'Enviado em',
+            successSaved: 'Salvo com sucesso!',
+            successFinalized: 'Questionário finalizado!',
+            errorSave: 'Erro ao salvar',
+            errorLoad: 'Erro ao carregar',
+            errorFinalize: 'Erro ao finalizar',
+            timeToImplement: 'Tempo previsto para implementação',
+            timeToImplementPlaceholder: 'Ex: 3 meses, Dezembro/2024...'
+        },
+        // Steps titles
+        steps: {
+            governance: 'Governance',
+            security: 'Security',
+            lifecycle: 'Data Lifecycle',
+            incidents: 'Incident Response',
+            kyc: 'KYC & Regulatory',
+            development: 'SDLC & AI',
+            hr: 'HR & Audit',
+            integrity: 'Integrity & Ethics',
+            upload: 'Upload'
+        },
+        // Step 2 - Security
+        step2: {
+            title: 'Information Security',
+            certifications: 'Security certifications',
+            certificationsPlaceholder: 'E.g.: ISO 27001, SOC 2, PCI-DSS...',
+            encryption: 'Data encryption at rest',
+            encryptionTransit: 'Encryption in transit (TLS/SSL)',
+            mfa: 'Multi-factor authentication (MFA) implemented',
+            firewall: 'Firewall and IDS/IPS configured',
+            pentest: 'Perform penetration tests periodically',
+            pentestFrequency: 'Penetration test frequency',
+            selectFrequency: 'Select frequency',
+            monthly: 'Monthly',
+            quarterly: 'Quarterly',
+            semiannual: 'Semiannual',
+            annual: 'Annual',
+            lastPentest: 'Last pentest performed',
+            accessControl: 'Role-based access control (RBAC)',
+            none: 'None',
+            other: 'Other'
+        },
+        // Step 3 - Lifecycle
+        step3: {
+            title: 'Data Lifecycle',
+            retention: 'Data retention period',
+            selectRetention: 'Select period',
+            sixMonths: '6 months',
+            oneYear: '1 year',
+            twoYears: '2 years',
+            threeYears: '3 years',
+            fiveYears: '5 years',
+            tenYears: '10 years',
+            indefinite: 'Indefinite',
+            variable: 'Variable',
+            disposal: 'Documented disposal process?',
+            disposalMethod: 'Disposal method',
+            selectMethod: 'Select method',
+            physicalDestruction: 'Physical destruction',
+            secureErasure: 'Secure erasure',
+            degaussing: 'Degaussing',
+            encryption: 'Encryption',
+            anonymization: 'Anonymization',
+            compliance: 'Compliance with data privacy regulations (GDPR/LGPD)',
+            yes: 'Yes',
+            no: 'No',
+            partial: 'Partial',
+            inProgress: 'In Progress'
+        },
+        // Step 4 - Incidents
+        step4: {
+            title: 'Incident Response',
+            plan: 'Documented incident response plan?',
+            notificationTime: 'Notification time to data subjects (hours)',
+            rto: 'RTO - Recovery Time Objective (hours)',
+            rpo: 'RPO - Recovery Point Objective (hours)',
+            upTo1h: 'Up to 1 hour',
+            upTo4h: 'Up to 4 hours',
+            upTo8h: 'Up to 8 hours',
+            upTo24h: 'Up to 24 hours',
+            realTime: 'Real-time / Zero loss',
+            maxDowntime: 'Maximum allowed downtime',
+            maxDataLoss: 'Maximum allowed data loss',
+            csirt: 'Has an incident response team (CSIRT)?',
+            insurance: 'Has cyber risk insurance?',
+            yes: 'Yes',
+            no: 'No'
+        },
+        // Step 5 - KYC & Regulatory (New)
+        step5: {
+            title: 'KYC & Regulatory Reports',
+            kyc: 'Perform Identity Verification (KYC)?',
+            kycProvider: 'Biometrics provider',
+            kycVerification: 'How do you ensure biometric accuracy?',
+            pld: 'Have a PLD/AML (Anti-Money Laundering) program?',
+            logs: 'Maintain logs for regulatory agencies?',
+            reportAgencies: 'Agencies to which you report'
+        },
+        // Step 6 - Development
+        step6: {
+            title: 'Secure Development & AI',
+            sdlc: 'Have SDLC (Secure Development Lifecycle)?',
+            methodologies: 'Applied methodologies',
+            codeReview: 'Perform code review?',
+            sast: 'Use SAST/DAST tools?',
+            ai: 'Use AI systems?',
+            aiPurposes: 'AI purposes',
+            aiGovernance: 'Documented AI governance?',
+            aiDataProtection: 'Does AI process personal data?',
+            aiConsent: 'User consent obtained for AI processing?',
+            yes: 'Yes',
+            no: 'No'
+        },
+        // Step 7 - HR & Training
+        step6: {
+            title: 'HR & Training',
+            backgroundCheck: 'Perform employee background checks?',
+            verificationTypes: 'Verification types (Criminal, History...)',
+            hasSoc: 'Has Security Operations Center (SOC)?',
+            operates247: 'Operates 24/7?',
+            socModel: 'SOC Model',
+            internal: 'Internal',
+            outsourced: 'Outsourced (MSSP)',
+            hybrid: 'Hybrid',
+            securityTraining: 'Security training program?',
+            trainingFrequency: 'Training frequency',
+            selectFrequency: 'Select frequency',
+            monthly: 'Monthly',
+            quarterly: 'Quarterly',
+            semiannual: 'Semiannual',
+            annual: 'Annual',
+            nda: 'Employees sign NDA?',
+            audit: 'Undergo external audit?',
+            auditFrequency: 'Audit frequency',
+            yes: 'Yes',
+            no: 'No'
+        },
+        // Step 8 - Integrity
+        step7: {
+            title: 'Integrity & Ethics',
+            rng: 'Has RNG certification?',
+            certifier: 'Certifying entity',
+            date: 'Certification date',
+            otherCerts: 'Other security certifications',
+            portability: 'Allows data export/portability?',
+            notes: 'Additional notes',
+            notesPlaceholder: 'Supplementary information...',
+            yes: 'Yes',
+            no: 'No'
+        },
+
+        // Step 8 - Upload
+        step8: {
+            title: 'Documentos & Evidências',
+            subtitle: 'Faça upload dos documentos comprobatórios',
+            category: 'Categoria do documento',
+            selectCategory: 'Selecione a categoria',
+            policies: 'Políticas',
+            certificates: 'Certificados',
+            audits: 'Auditorias',
+            contracts: 'Contratos',
+            others: 'Outros',
+            dragDrop: 'Arraste arquivos ou clique para selecionar',
+            maxSize: 'Máximo 10MB por arquivo',
+            upload: 'Enviar',
+            uploading: 'Enviando...',
+            uploadedFiles: 'Arquivos Enviados',
+            noFiles: 'Nenhum arquivo enviado',
+            delete: 'Excluir',
+            recommendedDocs: 'Documentos Recomendados'
+        },
+        // Common
+        common: {
+            yes: 'Sim',
+            no: 'Não',
+            select: 'Selecione',
+            loading: 'Carregando...',
+            error: 'Erro',
+            success: 'Sucesso',
+            save: 'Salvar',
+            cancel: 'Cancelar',
+            confirm: 'Confirmar',
+            delete: 'Excluir',
+            edit: 'Editar',
+            view: 'Ver',
+            close: 'Fechar',
+            required: 'Obrigatório'
+        }
+    },
+    'en-US': {
+        // Header
+        header: {
+            title: 'Due Diligence',
+            questionnaire: 'Questionnaire',
+            admin: 'Admin',
+            logout: 'Logout'
+        },
+        // Login
+        login: {
+            title: 'Due Diligence',
+            subtitle: 'Access the system',
+            email: 'Email',
+            password: 'Password',
+            enter: 'Sign In',
+            loading: 'Loading...',
+            adminNote: 'Operators are registered by the administrator'
+        },
+        // Admin Dashboard
+        admin: {
+            title: 'Admin Dashboard',
+            subtitle: 'Manage operators and view status',
+            newOperator: 'New Operator',
+            exportCSV: 'Export CSV',
+            operators: 'Operators',
+            finalized: 'Completed',
+            inProgress: 'In Progress',
+            alerts: 'Alerts',
+            company: 'Company',
+            email: 'Email',
+            status: 'Status',
+            progress: 'Progress',
+            actions: 'Actions',
+            view: 'View',
+            active: 'active',
+            inactive: 'inactive',
+            noOperators: 'No operators',
+            details: 'Details',
+            submitted: 'Submitted',
+            answers: 'Questionnaire Answers',
+            filesUploaded: 'Uploaded Files',
+            createOperator: 'New Operator',
+            companyName: 'Company Name',
+            password: 'Password',
+            passwordHint: 'The password will be sent to the operator',
+            cancel: 'Cancel',
+            create: 'Create Operator',
+            creating: 'Creating...',
+            notStarted: 'Not started'
+        },
+        // Questionnaire
+        questionnaire: {
             title: 'Due Diligence Questionnaire',
             subtitle: 'Fill in your company\'s compliance information',
             step: 'Step',
@@ -289,7 +566,9 @@ export const translations = {
             successFinalized: 'Questionnaire submitted!',
             errorSave: 'Error saving',
             errorLoad: 'Error loading',
-            errorFinalize: 'Error submitting'
+            errorFinalize: 'Error submitting',
+            timeToImplement: 'Expected time to implement',
+            timeToImplementPlaceholder: 'E.g.: 3 months, Dec/2024...'
         },
         // Steps titles
         steps: {
@@ -300,7 +579,13 @@ export const translations = {
             development: 'SDLC & AI',
             hr: 'HR & Audit',
             integrity: 'Integrity',
-            upload: 'Files'
+            upload: 'Files',
+            businessContinuity: 'Business Continuity',
+            teamInsurance: 'Team & Insurance',
+            ai: 'Artificial Intelligence (AI)',
+            kyc: 'Identity Verification (KYC)',
+            pld: 'Anti-Money Laundering (AML)',
+            logs: 'Logs & Regulatory Reports'
         },
         // Step 1 - Governance
         step1: {
@@ -333,14 +618,19 @@ export const translations = {
             quarterly: 'Quarterly',
             semiannual: 'Semi-annual',
             annual: 'Annual',
-            accessControl: 'Role-based access control (RBAC)'
+            lastPentest: 'Last pentest',
+            accessControl: 'Role-based access control (RBAC)',
+            none: 'None',
+            other: 'Other'
         },
         // Step 3 - Lifecycle
         step3: {
             title: 'Data Lifecycle',
             retention: 'Data retention period',
             selectRetention: 'Select period',
+            sixMonths: '6 months',
             oneYear: '1 year',
+            twoYears: '2 years',
             threeYears: '3 years',
             fiveYears: '5 years',
             tenYears: '10 years',
@@ -353,18 +643,27 @@ export const translations = {
             secureErasure: 'Secure erasure',
             degaussing: 'Degaussing',
             encryption: 'Encryption',
+            anonymization: 'Anonymization',
             compliance: 'Compliance with local data privacy regulations',
             yes: 'Yes',
             no: 'No',
-            partial: 'Partial'
+            partial: 'Partial',
+            inProgress: 'In Progress'
         },
         // Step 4 - Incidents
         step4: {
             title: 'Incident Response',
             plan: 'Documented incident response plan?',
             notificationTime: 'Data subject notification time (hours)',
-            rto: 'RTO - Recovery Time Objective (hours)',
-            rpo: 'RPO - Recovery Point Objective (hours)',
+            rto: 'RTO - Recovery Time Objective',
+            rpo: 'RPO - Recovery Point Objective',
+            upTo1h: 'Up to 1 hour',
+            upTo4h: 'Up to 4 hours',
+            upTo8h: 'Up to 8 hours',
+            upTo24h: 'Up to 24 hours',
+            realTime: 'Real-time / Zero loss',
+            maxDowntime: 'Max downtime allowed',
+            maxDataLoss: 'Max data loss allowed',
             csirt: 'Has incident response team?',
             insurance: 'Has cyber insurance?',
             yes: 'Yes',
@@ -374,11 +673,14 @@ export const translations = {
         step5: {
             title: 'Secure Development & AI',
             sdlc: 'Has SDLC (Secure Development Lifecycle)?',
+            methodologies: 'Applied methodologies',
             codeReview: 'Performs code review?',
             sast: 'Uses SAST/DAST tools?',
             ai: 'Uses AI systems?',
+            aiPurposes: 'AI Purposes',
             aiGovernance: 'Has documented AI governance?',
             aiDataProtection: 'Does AI process personal data?',
+            aiConsent: 'User consent obtained?',
             yes: 'Yes',
             no: 'No'
         },
@@ -386,6 +688,13 @@ export const translations = {
         step6: {
             title: 'HR & Training',
             backgroundCheck: 'Performs employee background checks?',
+            verificationTypes: 'Verification types',
+            hasSoc: 'Has SOC?',
+            operates247: 'Operates 24/7?',
+            socModel: 'SOC Model',
+            internal: 'Internal',
+            outsourced: 'Outsourced (MSSP)',
+            hybrid: 'Hybrid',
             securityTraining: 'Security training program?',
             trainingFrequency: 'Training frequency',
             selectFrequency: 'Select frequency',
@@ -402,11 +711,13 @@ export const translations = {
         // Step 7 - Integrity
         step7: {
             title: 'Integrity & Ethics',
-            codeOfConduct: 'Has code of conduct?',
-            whistleblower: 'Whistleblower channel implemented?',
-            antiCorruption: 'Documented anti-corruption policy?',
-            thirdParty: 'Third-party due diligence?',
-            conflictOfInterest: 'Conflict of interest policy?',
+            rng: 'RNG Certification?',
+            certifyingEntity: 'Certifying entity',
+            certificationDate: 'Certification date',
+            certificationsHeld: 'Current certifications',
+            dataPortability: 'Allows data portability?',
+            accountDeletion: 'Full account deletion (Right to be Forgotten)?',
+            additionalNotes: 'Additional notes',
             yes: 'Yes',
             no: 'No'
         },
@@ -427,7 +738,8 @@ export const translations = {
             uploading: 'Uploading...',
             uploadedFiles: 'Uploaded Files',
             noFiles: 'No files uploaded',
-            delete: 'Delete'
+            delete: 'Delete',
+            recommendedDocs: 'Recommended Documents'
         },
         // Common
         common: {
@@ -448,3 +760,4 @@ export const translations = {
         }
     }
 };
+
