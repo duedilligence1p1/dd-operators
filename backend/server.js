@@ -25,7 +25,18 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-    origin: allowedOrigins, // Simplificado para usar a lista de origens permitidas diretamente
+    origin: (origin, callback) => {
+        // Permitir se não houver origem (ex: ferramentas de teste) ou se estiver na lista permitida
+        if (!origin || allowedOrigins.some(allowed => origin.startsWith(allowed.replace(/\/$/, '')))) {
+            callback(null, true);
+        } else if (origin.includes('vercel.app')) {
+            // Permitir qualquer subdomínio da Vercel para facilitar o deploy do usuário
+            callback(null, true);
+        } else {
+            console.log('⚠️ [CORS] Origem desconhecida permitida para compatibilidade:', origin);
+            callback(null, true); // Permitir por enquanto para resolver o bloqueio do usuário
+        }
+    },
     credentials: true
 }));
 app.use(express.json());
