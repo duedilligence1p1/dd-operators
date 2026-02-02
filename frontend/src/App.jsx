@@ -7,6 +7,14 @@ import './index.css';
 
 function AppContent() {
     const { user, loading } = useAuth();
+
+    console.log('🔄 [APP] Renderizando AppContent', {
+        loading,
+        hasUser: !!user,
+        isAdmin: user?.is_admin,
+        userEmail: user?.email
+    });
+
     if (loading) return <div className="loading-overlay"><div className="loading-spinner"></div></div>;
     if (!user) return <Login />;
     if (user.is_admin) return <AdminDashboard />;

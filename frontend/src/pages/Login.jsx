@@ -13,9 +13,13 @@ export default function Login() {
         e.preventDefault();
         setError('');
         setLoading(true);
+        console.log('🔐 [FRONTEND] Tentando fazer login...');
         try {
-            await login(formData.email, formData.password);
+            const user = await login(formData.email, formData.password);
+            console.log('✅ [FRONTEND] Login bem-sucedido!', user);
+            console.log('📊 [FRONTEND] User is_admin:', user.is_admin);
         } catch (err) {
+            console.error('❌ [FRONTEND] Erro no login:', err);
             setError(err.message);
         } finally {
             setLoading(false);

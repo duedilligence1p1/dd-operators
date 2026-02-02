@@ -1,0 +1,17 @@
+﻿­ƒôª Usando banco de dados LOCAL (SQLite)
+­ƒöÉ Resetando senha do admin (Ambiente: local SQLite)...
+
+DEBUG: Using Email [duediligence1p1@yahoo.com]
+DEBUG: Using Password [DD1p1!@#]
+Ô£à Usu├írio encontrado: duediligence1p1@yahoo.com
+   Admin: 1
+
+­ƒöä Atualizando senha...
+
+Ô£à Senha atualizada com sucesso!
+
+­ƒôï Credenciais para login:
+   Email: duediligence1p1@yahoo.com
+   Senha: DD1p1!@#
+
+Ô£à Processo conclu├¡do!

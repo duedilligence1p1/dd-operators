@@ -8,21 +8,53 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        if (!email || !password) return res.status(400).json({ error: 'Email e senha são obrigatórios' });
+        console.log('🔐 [LOGIN] Tentativa de login:', { email, hasPassword: !!password });
 
-        const result = await query('SELECT * FROM operadores WHERE email = $1', [email.toLowerCase()]);
-        if (result.rows.length === 0) return res.status(401).json({ error: 'Credenciais inválidas' });
+        if (!email || !password) {
+            console.log('❌ [LOGIN] Email ou senha ausente');
+            return res.status(400).json({ error: 'Email e senha são obrigatórios' });
+        }
+
+        const emailLower = email.toLowerCase();
+        console.log('🔍 [LOGIN] Buscando usuário no banco:', emailLower);
+
+        const result = await query('SELECT * FROM operadores WHERE email = $1', [emailLower]);
+        console.log('📊 [LOGIN] Usuários encontrados:', result.rows.length);
+
+        if (result.rows.length === 0) {
+            console.log('❌ [LOGIN] Nenhum usuário encontrado com este email');
+            return res.status(401).json({ error: 'Credenciais inválidas' });
+        }
 
         const user = result.rows[0];
-        if (user.status !== 'ativo') return res.status(403).json({ error: 'Conta desativada' });
+        console.log('👤 [LOGIN] Usuário encontrado:', {
+            id: user.id,
+            email: user.email,
+            status: user.status,
+            is_admin: user.is_admin
+        });
 
+        if (user.status !== 'ativo') {
+            console.log('❌ [LOGIN] Conta desativada:', user.status);
+            return res.status(403).json({ error: 'Conta desativada' });
+        }
+
+        console.log('🔑 [LOGIN] Verificando senha...');
         const validPassword = await bcrypt.compare(password, user.password_hash);
-        if (!validPassword) return res.status(401).json({ error: 'Credenciais inválidas' });
+        console.log('✅ [LOGIN] Senha válida:', validPassword);
+
+        if (!validPassword) {
+            console.log('❌ [LOGIN] Senha inválida');
+            return res.status(401).json({ error: 'Credenciais inválidas' });
+        }
 
         const token = generateToken(user.id, user.is_admin);
+        console.log('🎫 [LOGIN] Token gerado com sucesso');
+        console.log('✅ [LOGIN] Login bem-sucedido para:', user.email);
+
         res.json({ token, user: { id: user.id, email: user.email, nome_empresa: user.nome_empresa, is_admin: user.is_admin } });
     } catch (error) {
-        console.error('Erro no login:', error);
+        console.error('💥 [LOGIN] Erro no login:', error);
         res.status(500).json({ error: 'Erro interno' });
     }
 });

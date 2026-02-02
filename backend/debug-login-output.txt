@@ -1,0 +1,9 @@
+﻿­ƒôª Usando banco de dados LOCAL (SQLite)
+--- Debug Login ---
+Email: duediligence1p1@yahoo.com
+Password: DD1p1!@#
+User found: true
+User ID: d3710f88-be52-4c38-aa44-cec395369aa1
+User Status: ativo
+User Admin: 1
+Password Valid: true
