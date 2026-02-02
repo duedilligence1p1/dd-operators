@@ -54,19 +54,25 @@ app.get('/api/health', async (req, res) => {
         const dbUrlCheck = dbUrl ? `${dbUrl.substring(0, 15)}...${dbUrl.substring(dbUrl.length - 15)}` : 'not set';
         const isPostgres = !!process.env.DATABASE_URL && process.env.DB_TYPE !== 'sqlite';
 
+        let operatorsList = [];
         let opCount = -1;
         try {
             const { query } = await import('./config/database.js');
-            const countResult = await query('SELECT COUNT(*) as total FROM operadores');
-            opCount = parseInt(countResult.rows?.[0]?.total || 0);
+            const result = await query('SELECT email, is_admin FROM operadores ORDER BY created_at LIMIT 10');
+            opCount = result.rows.length;
+            operatorsList = result.rows.map(op => ({
+                email: op.email.substring(0, 3) + '***' + op.email.substring(op.email.indexOf('@')),
+                admin: op.is_admin
+            }));
         } catch (e) {
-            console.error('Erro ao contar:', e.message);
+            console.error('Erro ao listar:', e.message);
         }
 
         res.json({
             status: 'ok',
             database: isPostgres ? 'postgresql' : 'sqlite',
-            operators: opCount,
+            operators_count: opCount,
+            operators: operatorsList,
             db_url_check: dbUrlCheck,
             frontend_url: process.env.FRONTEND_URL || 'not set',
             env: process.env.NODE_ENV || 'production'
