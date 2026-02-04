@@ -9,25 +9,29 @@ export default function Step6Desenvolvimento({ data, updateData, disabled }) {
     return (
         <div>
             <div className="step-section">
-                <h3 className="step-section-title">{t('step5.title')}</h3>
+                <h3 className="step-section-title">SDLC e IA</h3>
                 <div className="form-group">
-                    <label className="form-label required">{t('step5.sdlc')}</label>
+                    <label className="form-label required">SDLC (Ciclo de Vida de Desenvolvimento Seguro)</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="sdlc_implementado" value="sim" checked={formData.sdlc_implementado === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="sdlc_implementado" value="parcial" checked={formData.sdlc_implementado === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="sdlc_implementado" value="em_implementacao" checked={formData.sdlc_implementado === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="sdlc_implementado" value="nao" checked={formData.sdlc_implementado === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="sdlc_implementado" value="na" checked={formData.sdlc_implementado === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -36,31 +40,35 @@ export default function Step6Desenvolvimento({ data, updateData, disabled }) {
                         value={formData.sdlc_implementado_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.sdlc_implementado && formData.sdlc_implementado !== 'sim'}
+                        visible={formData.sdlc_implementado && formData.sdlc_implementado !== 'sim' && formData.sdlc_implementado !== 'na'}
                     />
                 </div>
                 <div className="form-group">
-                    <label className="form-label">{t('step5.methodologies')}</label>
+                    <label className="form-label">Metodologias utilizadas</label>
                     <textarea name="sdlc_metodologias" className="form-textarea" placeholder="E.g.: OWASP SAMM, OWASP ASVS, Microsoft SDL..." value={formData.sdlc_metodologias || ''} onChange={handleChange} disabled={disabled} />
                 </div>
                 <div className="form-group">
-                    <label className="form-label">{t('step5.sast')}</label>
+                    <label className="form-label">SAST/DAST (Testes de Segurança)</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="sast_dast" value="sim" checked={formData.sast_dast === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="sast_dast" value="parcial" checked={formData.sast_dast === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="sast_dast" value="em_implementacao" checked={formData.sast_dast === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="sast_dast" value="nao" checked={formData.sast_dast === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="sast_dast" value="na" checked={formData.sast_dast === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -69,50 +77,54 @@ export default function Step6Desenvolvimento({ data, updateData, disabled }) {
                         value={formData.sast_dast_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.sast_dast && formData.sast_dast !== 'sim'}
+                        visible={formData.sast_dast && formData.sast_dast !== 'sim' && formData.sast_dast !== 'na'}
                     />
                 </div>
             </div>
 
             <div className="step-section">
-                <h3 className="step-section-title">{t('steps.ai')}</h3>
+                <h3 className="step-section-title">Inteligência Artificial (IA)</h3>
                 <div className="form-group">
-                    <label className="form-label required">{t('step5.ai')}</label>
+                    <label className="form-label required">Utiliza IA?</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="ia_utiliza" value="sim" checked={formData.ia_utiliza === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="ia_utiliza" value="nao" checked={formData.ia_utiliza === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
                         </label>
                     </div>
                 </div>
                 {formData.ia_utiliza === 'sim' && (
                     <div style={{ animation: 'fadeIn 0.3s ease-in-out' }}>
                         <div className="form-group">
-                            <label className="form-label">{t('step5.aiPurposes')}</label>
+                            <label className="form-label">Finalidades de uso da IA</label>
                             <textarea name="ia_finalidades" className="form-textarea" placeholder="E.g.: Fraud detection, risk analysis, chatbot..." value={formData.ia_finalidades || ''} onChange={handleChange} disabled={disabled} />
                         </div>
                         <div className="form-group">
-                            <label className="form-label required">{t('step5.aiDataProtection')}</label>
+                            <label className="form-label required">Dados de treino são protegidos?</label>
                             <div className="radio-group-horizontal">
                                 <label className="form-check">
                                     <input type="radio" name="ia_treino_dados" value="sim" checked={formData.ia_treino_dados === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('common.yes')}</span>
+                                    <span className="form-check-label">Sim</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="ia_treino_dados" value="parcial" checked={formData.ia_treino_dados === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('step3.partial')}</span>
+                                    <span className="form-check-label">Parcial</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="ia_treino_dados" value="em_implementacao" checked={formData.ia_treino_dados === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('step3.inProgress')}</span>
+                                    <span className="form-check-label">Em Progresso</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="ia_treino_dados" value="nao" checked={formData.ia_treino_dados === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('common.no')}</span>
+                                    <span className="form-check-label">Não</span>
+                                </label>
+                                <label className="form-check">
+                                    <input type="radio" name="ia_treino_dados" value="na" checked={formData.ia_treino_dados === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                                    <span className="form-check-label">N/A</span>
                                 </label>
                             </div>
                             <TimeToImplement
@@ -121,27 +133,31 @@ export default function Step6Desenvolvimento({ data, updateData, disabled }) {
                                 value={formData.ia_treino_dados_tempo}
                                 onChange={updateData}
                                 disabled={disabled}
-                                visible={formData.ia_treino_dados && formData.ia_treino_dados !== 'sim'}
+                                visible={formData.ia_treino_dados && formData.ia_treino_dados !== 'sim' && formData.ia_treino_dados !== 'na'}
                             />
                         </div>
                         <div className="form-group">
-                            <label className="form-label">{t('step5.aiConsent')}</label>
+                            <label className="form-label">Consentimento para uso de dados</label>
                             <div className="radio-group-horizontal">
                                 <label className="form-check">
                                     <input type="radio" name="ia_consentimento" value="sim" checked={formData.ia_consentimento === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('common.yes')}</span>
+                                    <span className="form-check-label">Sim</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="ia_consentimento" value="parcial" checked={formData.ia_consentimento === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('step3.partial')}</span>
+                                    <span className="form-check-label">Parcial</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="ia_consentimento" value="em_implementacao" checked={formData.ia_consentimento === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('step3.inProgress')}</span>
+                                    <span className="form-check-label">Em Progresso</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="ia_consentimento" value="nao" checked={formData.ia_consentimento === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('common.no')}</span>
+                                    <span className="form-check-label">Não</span>
+                                </label>
+                                <label className="form-check">
+                                    <input type="radio" name="ia_consentimento" value="na" checked={formData.ia_consentimento === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                                    <span className="form-check-label">N/A</span>
                                 </label>
                             </div>
                             <TimeToImplement
@@ -150,7 +166,7 @@ export default function Step6Desenvolvimento({ data, updateData, disabled }) {
                                 value={formData.ia_consentimento_tempo}
                                 onChange={updateData}
                                 disabled={disabled}
-                                visible={formData.ia_consentimento && formData.ia_consentimento !== 'sim'}
+                                visible={formData.ia_consentimento && formData.ia_consentimento !== 'sim' && formData.ia_consentimento !== 'na'}
                             />
                         </div>
                     </div>

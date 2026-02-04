@@ -49,18 +49,18 @@ export default function Step9Upload({ disabled }) {
     return (
         <div>
             <div className="step-section">
-                <h3 className="step-section-title">{t('step8.title')}</h3>
-                <p style={{ color: 'var(--neutral-400)', marginBottom: '1.5rem' }}>{t('step8.subtitle')}</p>
+                <h3 className="step-section-title">Documentos & Evidências</h3>
+                <p style={{ color: 'var(--neutral-400)', marginBottom: '1.5rem' }}>{t('step9.subtitle')}</p>
                 {error && <div className="alert alert-danger"><span>⚠️</span><span>{error}</span></div>}
                 <div className="file-upload-zone" onClick={() => !disabled && fileInputRef.current?.click()} style={{ opacity: disabled ? 0.5 : 1 }}>
                     <div style={{ fontSize: '3rem', color: 'var(--neutral-500)', marginBottom: '1rem' }}>📁</div>
-                    <p style={{ color: 'var(--neutral-300)' }}>{uploading ? t('step8.uploading') : t('step8.dragDrop')}</p>
-                    <p style={{ color: 'var(--neutral-500)', fontSize: '0.875rem' }}>PDF, PNG, JPG, DOC • {t('step8.maxSize')}</p>
+                    <p style={{ color: 'var(--neutral-300)' }}>{uploading ? t('step9.uploading') : t('step9.dragDrop')}</p>
+                    <p style={{ color: 'var(--neutral-500)', fontSize: '0.875rem' }}>PDF, PNG, JPG, DOC • {t('step9.maxSize')}</p>
                     <input ref={fileInputRef} type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" onChange={handleFileSelect} style={{ display: 'none' }} disabled={disabled} />
                 </div>
                 {files.length > 0 && (
                     <div className="file-list">
-                        <h4 style={{ marginBottom: '1rem', color: 'var(--neutral-300)' }}>{t('step8.uploadedFiles')}</h4>
+                        <h4 style={{ marginBottom: '1rem', color: 'var(--neutral-300)' }}>{t('step9.uploadedFiles')}</h4>
                         {files.map(file => (
                             <div key={file.id} className="file-item">
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>

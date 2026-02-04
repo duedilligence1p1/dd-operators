@@ -9,25 +9,29 @@ export default function Step7RH({ data, updateData, disabled }) {
     return (
         <div>
             <div className="step-section">
-                <h3 className="step-section-title">{t('step6.title')}</h3>
+                <h3 className="step-section-title">RH & Auditoria</h3>
                 <div className="form-group">
-                    <label className="form-label required">{t('step6.backgroundCheck')}</label>
+                    <label className="form-label required">Background Check</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="background_check" value="sim" checked={formData.background_check === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="background_check" value="parcial" checked={formData.background_check === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="background_check" value="em_implementacao" checked={formData.background_check === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="background_check" value="nao" checked={formData.background_check === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="background_check" value="na" checked={formData.background_check === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -36,12 +40,12 @@ export default function Step7RH({ data, updateData, disabled }) {
                         value={formData.background_check_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.background_check && formData.background_check !== 'sim'}
+                        visible={formData.background_check && formData.background_check !== 'sim' && formData.background_check !== 'na'}
                     />
                 </div>
                 {formData.background_check === 'sim' && (
                     <div className="form-group" style={{ animation: 'fadeIn 0.3s ease-in-out' }}>
-                        <label className="form-label">{t('step6.verificationTypes')}</label>
+                        <label className="form-label">Tipos de verificação</label>
                         <textarea name="bg_tipos" className="form-textarea" placeholder="E.g.: Criminal background, employment history..." value={formData.bg_tipos || ''} onChange={handleChange} disabled={disabled} />
                     </div>
                 )}
@@ -50,23 +54,27 @@ export default function Step7RH({ data, updateData, disabled }) {
             <div className="step-section">
                 <h3 className="step-section-title">Security Operations Center (SOC)</h3>
                 <div className="form-group">
-                    <label className="form-label required">{t('step6.hasSoc')}</label>
+                    <label className="form-label required">Possui SOC?</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="soc_existe" value="sim" checked={formData.soc_existe === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="soc_existe" value="parcial" checked={formData.soc_existe === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="soc_existe" value="em_implementacao" checked={formData.soc_existe === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="soc_existe" value="nao" checked={formData.soc_existe === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="soc_existe" value="na" checked={formData.soc_existe === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -75,29 +83,33 @@ export default function Step7RH({ data, updateData, disabled }) {
                         value={formData.soc_existe_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.soc_existe && formData.soc_existe !== 'sim'}
+                        visible={formData.soc_existe && formData.soc_existe !== 'sim' && formData.soc_existe !== 'na'}
                     />
                 </div>
                 {formData.soc_existe === 'sim' && (
                     <div style={{ animation: 'fadeIn 0.3s ease-in-out' }}>
                         <div className="form-group">
-                            <label className="form-label required">{t('step6.operates247')}</label>
+                            <label className="form-label required">Opera 24x7?</label>
                             <div className="radio-group-horizontal">
                                 <label className="form-check">
                                     <input type="radio" name="soc_24x7" value="sim" checked={formData.soc_24x7 === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('common.yes')}, 24/7</span>
+                                    <span className="form-check-label">Sim, 24/7</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="soc_24x7" value="parcial" checked={formData.soc_24x7 === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('step3.partial')}</span>
+                                    <span className="form-check-label">Parcial</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="soc_24x7" value="em_implementacao" checked={formData.soc_24x7 === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('step3.inProgress')}</span>
+                                    <span className="form-check-label">Em Progresso</span>
                                 </label>
                                 <label className="form-check">
                                     <input type="radio" name="soc_24x7" value="nao" checked={formData.soc_24x7 === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                                    <span className="form-check-label">{t('common.no')}</span>
+                                    <span className="form-check-label">Não</span>
+                                </label>
+                                <label className="form-check">
+                                    <input type="radio" name="soc_24x7" value="na" checked={formData.soc_24x7 === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                                    <span className="form-check-label">N/A</span>
                                 </label>
                             </div>
                             <TimeToImplement
@@ -106,16 +118,16 @@ export default function Step7RH({ data, updateData, disabled }) {
                                 value={formData.soc_24x7_tempo}
                                 onChange={updateData}
                                 disabled={disabled}
-                                visible={formData.soc_24x7 && formData.soc_24x7 !== 'sim'}
+                                visible={formData.soc_24x7 && formData.soc_24x7 !== 'sim' && formData.soc_24x7 !== 'na'}
                             />
                         </div>
                         <div className="form-group">
-                            <label className="form-label">{t('step6.socModel')}</label>
+                            <label className="form-label">Modelo do SOC</label>
                             <select name="soc_modelo" className="form-select" value={formData.soc_modelo || ''} onChange={handleChange} disabled={disabled}>
-                                <option value="">{t('common.select')}...</option>
-                                <option value="interno">{t('step6.internal')}</option>
-                                <option value="terceirizado">{t('step6.outsourced')}</option>
-                                <option value="hibrido">{t('step6.hybrid')}</option>
+                                <option value="">Selecione...</option>
+                                <option value="interno">Interno</option>
+                                <option value="terceirizado">Terceirizado</option>
+                                <option value="hibrido">Híbrido</option>
                             </select>
                         </div>
                     </div>
@@ -123,25 +135,29 @@ export default function Step7RH({ data, updateData, disabled }) {
             </div>
 
             <div className="step-section">
-                <h3 className="step-section-title">{t('step6.securityTraining')}</h3>
+                <h3 className="step-section-title">Treinamento de Segurança</h3>
                 <div className="form-group">
-                    <label className="form-label required">{t('step6.securityTraining')}</label>
+                    <label className="form-label required">Treinamento de Segurança</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="treinamento_seguranca" value="sim" checked={formData.treinamento_seguranca === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="treinamento_seguranca" value="parcial" checked={formData.treinamento_seguranca === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="treinamento_seguranca" value="em_implementacao" checked={formData.treinamento_seguranca === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="treinamento_seguranca" value="nao" checked={formData.treinamento_seguranca === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="treinamento_seguranca" value="na" checked={formData.treinamento_seguranca === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -150,28 +166,32 @@ export default function Step7RH({ data, updateData, disabled }) {
                         value={formData.treinamento_seguranca_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.treinamento_seguranca && formData.treinamento_seguranca !== 'sim'}
+                        visible={formData.treinamento_seguranca && formData.treinamento_seguranca !== 'sim' && formData.treinamento_seguranca !== 'na'}
                     />
                 </div>
 
                 <div className="form-group">
-                    <label className="form-label required">{t('step6.nda')}</label>
+                    <label className="form-label required">NDA (Acordo de Confidencialidade)</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="nda_assinado" value="sim" checked={formData.nda_assinado === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="nda_assinado" value="parcial" checked={formData.nda_assinado === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="nda_assinado" value="em_implementacao" checked={formData.nda_assinado === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="nda_assinado" value="nao" checked={formData.nda_assinado === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="nda_assinado" value="na" checked={formData.nda_assinado === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -180,28 +200,32 @@ export default function Step7RH({ data, updateData, disabled }) {
                         value={formData.nda_assinado_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.nda_assinado && formData.nda_assinado !== 'sim'}
+                        visible={formData.nda_assinado && formData.nda_assinado !== 'sim' && formData.nda_assinado !== 'na'}
                     />
                 </div>
 
                 <div className="form-group">
-                    <label className="form-label required">{t('step6.audit')}</label>
+                    <label className="form-label required">Auditoria Externa</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="auditoria_externa" value="sim" checked={formData.auditoria_externa === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="auditoria_externa" value="parcial" checked={formData.auditoria_externa === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="auditoria_externa" value="em_implementacao" checked={formData.auditoria_externa === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="auditoria_externa" value="nao" checked={formData.auditoria_externa === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="auditoria_externa" value="na" checked={formData.auditoria_externa === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -210,7 +234,7 @@ export default function Step7RH({ data, updateData, disabled }) {
                         value={formData.auditoria_externa_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.auditoria_externa && formData.auditoria_externa !== 'sim'}
+                        visible={formData.auditoria_externa && formData.auditoria_externa !== 'sim' && formData.auditoria_externa !== 'na'}
                     />
                 </div>
 

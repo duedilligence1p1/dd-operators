@@ -9,16 +9,16 @@ export default function Step2Seguranca({ data, updateData, disabled }) {
     return (
         <div>
             <div className="step-section">
-                <h3 className="step-section-title">{t('step2.title')}</h3>
+                <h3 className="step-section-title">Segurança da Informação</h3>
                 <div className="form-row">
                     <div className="form-group">
-                        <label className="form-label required">{t('step2.encryption')}</label>
+                        <label className="form-label required">Criptografia de dados em repouso</label>
                         <select name="criptografia_repouso" className="form-select" value={formData.criptografia_repouso || ''} onChange={handleChange} disabled={disabled}>
-                            <option value="">{t('common.select')}...</option>
+                            <option value="">Selecione...</option>
                             <option value="AES-256">AES-256</option>
                             <option value="AES-128">AES-128</option>
-                            <option value="outro">{t('step2.other')}</option>
-                            <option value="nenhum">{t('step2.none')}</option>
+                            <option value="outro">Outro</option>
+                            <option value="nenhum">Nenhum</option>
                         </select>
                         <TimeToImplement
                             section="seguranca"
@@ -30,9 +30,9 @@ export default function Step2Seguranca({ data, updateData, disabled }) {
                         />
                     </div>
                     <div className="form-group">
-                        <label className="form-label required">{t('step2.encryptionTransit')}</label>
+                        <label className="form-label required">Criptografia em trânsito (TLS/SSL)</label>
                         <select name="criptografia_transito" className="form-select" value={formData.criptografia_transito || ''} onChange={handleChange} disabled={disabled}>
-                            <option value="">{t('common.select')}...</option>
+                            <option value="">Selecione...</option>
                             <option value="TLS-1.3">TLS 1.3</option>
                             <option value="TLS-1.2">TLS 1.2</option>
                         </select>
@@ -41,25 +41,29 @@ export default function Step2Seguranca({ data, updateData, disabled }) {
             </div>
 
             <div className="step-section">
-                <h3 className="step-section-title">{t('step2.mfa')}</h3>
+                <h3 className="step-section-title">Autenticação MFA</h3>
                 <div className="form-group">
-                    <label className="form-label required">{t('step2.mfa')}</label>
+                    <label className="form-label required">Autenticação multifator (MFA) implementada</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="mfa_implementado" value="sim" checked={formData.mfa_implementado === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="mfa_implementado" value="parcial" checked={formData.mfa_implementado === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="mfa_implementado" value="em_implementacao" checked={formData.mfa_implementado === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="mfa_implementado" value="nao" checked={formData.mfa_implementado === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="mfa_implementado" value="na" checked={formData.mfa_implementado === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -68,31 +72,35 @@ export default function Step2Seguranca({ data, updateData, disabled }) {
                         value={formData.mfa_implementado_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.mfa_implementado && formData.mfa_implementado !== 'sim'}
+                        visible={formData.mfa_implementado && formData.mfa_implementado !== 'sim' && formData.mfa_implementado !== 'na'}
                     />
                 </div>
             </div>
 
             <div className="step-section">
-                <h3 className="step-section-title">{t('step2.pentest')}</h3>
+                <h3 className="step-section-title">Testes de Penetração (Pentest)</h3>
                 <div className="form-group">
-                    <label className="form-label required">{t('step2.pentest')}</label>
+                    <label className="form-label required">Realiza testes de penetração periodicamente</label>
                     <div className="radio-group-horizontal">
                         <label className="form-check">
                             <input type="radio" name="pentest_regular" value="sim" checked={formData.pentest_regular === 'sim'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.yes')}</span>
+                            <span className="form-check-label">Sim</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="pentest_regular" value="parcial" checked={formData.pentest_regular === 'parcial'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.partial')}</span>
+                            <span className="form-check-label">Parcial</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="pentest_regular" value="em_implementacao" checked={formData.pentest_regular === 'em_implementacao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('step3.inProgress')}</span>
+                            <span className="form-check-label">Em Progresso</span>
                         </label>
                         <label className="form-check">
                             <input type="radio" name="pentest_regular" value="nao" checked={formData.pentest_regular === 'nao'} onChange={handleChange} disabled={disabled} className="form-check-input" />
-                            <span className="form-check-label">{t('common.no')}</span>
+                            <span className="form-check-label">Não</span>
+                        </label>
+                        <label className="form-check">
+                            <input type="radio" name="pentest_regular" value="na" checked={formData.pentest_regular === 'na'} onChange={handleChange} disabled={disabled} className="form-check-input" />
+                            <span className="form-check-label">N/A</span>
                         </label>
                     </div>
                     <TimeToImplement
@@ -101,23 +109,23 @@ export default function Step2Seguranca({ data, updateData, disabled }) {
                         value={formData.pentest_regular_tempo}
                         onChange={updateData}
                         disabled={disabled}
-                        visible={formData.pentest_regular && formData.pentest_regular !== 'sim'}
+                        visible={formData.pentest_regular && formData.pentest_regular !== 'sim' && formData.pentest_regular !== 'na'}
                     />
                 </div>
                 {formData.pentest_regular === 'sim' && (
                     <div className="form-row" style={{ marginTop: '1rem', animation: 'fadeIn 0.3s ease-in-out' }}>
                         <div className="form-group">
-                            <label className="form-label">{t('step2.pentestFrequency')}</label>
+                            <label className="form-label">Frequência dos testes</label>
                             <select name="pentest_frequencia" className="form-select" value={formData.pentest_frequencia || ''} onChange={handleChange} disabled={disabled}>
-                                <option value="">{t('common.select')}...</option>
-                                <option value="mensal">{t('step2.monthly')}</option>
-                                <option value="trimestral">{t('step2.quarterly')}</option>
-                                <option value="semestral">{t('step2.semiannual')}</option>
-                                <option value="anual">{t('step2.annual')}</option>
+                                <option value="">Selecione...</option>
+                                <option value="mensal">Mensal</option>
+                                <option value="trimestral">Trimestral</option>
+                                <option value="semestral">Semestral</option>
+                                <option value="anual">Anual</option>
                             </select>
                         </div>
                         <div className="form-group">
-                            <label className="form-label">{t('step2.lastPentest')}</label>
+                            <label className="form-label">Último pentest realizado</label>
                             <input type="date" name="pentest_ultima_data" className="form-input" value={formData.pentest_ultima_data || ''} onChange={handleChange} disabled={disabled} />
                         </div>
                     </div>
